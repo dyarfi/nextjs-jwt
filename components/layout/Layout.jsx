@@ -1,268 +1,38 @@
-import React, { useState, useEffect } from "react";
 import Head from "next/head";
-// import useCookie from "../hooks/useCookie";
 
-/* Componenets */
-import FormLogin from "../components/form/FormLogin";
+/* Components */
+import Header from "../header/Header";
+import Footer from "../footer/Footer";
 
-const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,2|3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-/* login schemas */
-const FORM_DATA_LOGIN = {
-  email: {
-    value: "",
-    label: "Email",
-    min: 10,
-    max: 36,
-    required: true,
-    validator: {
-      regEx: emailRegEx,
-      error: "Please insert valid email",
-    },
-  },
-  password: {
-    value: "",
-    label: "Password",
-    min: 6,
-    max: 36,
-    required: true,
-    validator: {
-      regEx: /^[a-z\sA-Z0-9\W\w]+$/,
-      error: "Please insert valid password",
-    },
-  },
-};
-
-export default function Home() {
-  // const [cookie] = useCookie("username", "BrandonBaars");
-  const [stateFormData, setStateFormData] = useState(FORM_DATA_LOGIN);
-  const [stateFormError, setStateFormError] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [stateFormMessage, setStateFormMessage] = useState({});
-
-
-  function onSubmitHandler() {
-
-  }
-
-  function onChangeHandler() {
-
-  }
-
-  function onSubmitHandler() {
-
-  }
-
+export default function Layout({
+  children,
+  title = "Next.js with Sequelize | A boilerplate from dyarfi.github.io",
+}) {
   return (
-    <div className="container">
+    <div>
       <Head>
-        <title>Welcome to Next.js with JWT Authentication Application</title>
-        <meta name="description" content="A Practical Guide for JWT (JSON Web Tokens) Authentication in Next.js Application." />
+        <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta charSet="utf-8" />
+        {/* <meta name="viewport" content="initial-scale=1.0, width=device-width" /> */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+        {/* <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+          crossorigin="anonymous"
+        /> */}
       </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        {/* <div className="App">
-          <h1>Hello CodeSandbox</h1>
-          <h1>{cookie}</h1>
-          <button onClick={() => {}}>Store Cookie</button>
-        </div> */}
-
-        <h2>JWT Authentication</h2>
-        <h3>Login to continue</h3>
-        <p className="description">
-          Use : <code>email1@email.com</code> or <code>email2@email.com</code>{" "}
-          with the password:
-          <code>password</code>
-        </p>
-        <div style={{ maxWidth: "66.6%" }}>
-          {/* <form>
-              <label htmlFor="email">
-                <input
-                  name="email"
-                  id="name"
-                  // defaultValue=""
-                  placeholder="Email"
-                  style={{ width: "100%" }}
-                />
-              </label>
-              <label htmlFor="password">
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  // defaultValue=""
-                  placeholder="Password"
-                  style={{ width: "100%" }}
-                />
-              </label>
-              <div>
-                <button
-                  type="submit"
-                  style={{ width: "100%", textTransform: "uppercase" }}
-                >
-                  Login
-                </button>
-              </div>
-            </form> */}
-
-          <FormLogin props={{
-            onSubmitHandler,
-            onChangeHandler,
-            loading,
-            stateFormData,
-            stateFormError,
-            stateFormMessage,
-          }} />
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        .logo {
-          height: 1em;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
+      <Header />
+      {children}
+      <Footer />
       <style jsx global>{`
         html,
         body {
