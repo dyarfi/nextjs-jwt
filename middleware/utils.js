@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 const SECRET_KEY = process.env.JWT_KEY;
 
@@ -10,7 +10,7 @@ export function verifyToken(jwtToken) {
   try {
     return jwt.verify(jwtToken, SECRET_KEY);
   } catch (e) {
-    console.log("e:", e);
+    console.log('e:', e);
     return null;
   }
 }
@@ -22,9 +22,9 @@ export function verifyToken(jwtToken) {
 export function getAppCookies(req) {
   const parsedItems = {};
   if (req.headers.cookie) {
-    const cookiesItems = req.headers.cookie.split("; ");
-    cookiesItems.forEach((cookies) => {
-      const parsedItem = cookies.split("=");
+    const cookiesItems = req.headers.cookie.split('; ');
+    cookiesItems.forEach(cookies => {
+      const parsedItem = cookies.split('=');
       parsedItems[parsedItem[0]] = decodeURI(parsedItem[1]);
     });
   }

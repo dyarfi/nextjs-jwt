@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 /* Components */
 // import DarkModeToggle from "../DarkModeToggle";
@@ -9,17 +9,17 @@ const User = ({ props }) => {
   return (
     <p className="account">
       {(user && (
-        <Link href={{ pathname: "/user/logout" }}>
+        <Link href={{ pathname: '/user/logout' }}>
           <a>Logout</a>
         </Link>
       )) || (
         <>
           Have an Account?
-          <Link href={{ pathname: "/user/login" }}>
+          <Link href={{ pathname: '/user/login' }}>
             <a>Login</a>
           </Link>
           or
-          <Link href={{ pathname: "/user/register" }}>
+          <Link href={{ pathname: '/user/register' }}>
             <a>Register</a>
           </Link>
         </>

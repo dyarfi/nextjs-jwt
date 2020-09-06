@@ -12,7 +12,7 @@ function FormJob(props) {
       <div className="form-group">
         <h2>Form Job</h2>
         <hr />
-        {stateFormMessage.status === "error" && (
+        {stateFormMessage.status === 'error' && (
           <h4 className="warning text-center">{stateFormMessage.error}</h4>
         )}
       </div>

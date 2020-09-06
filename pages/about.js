@@ -7,7 +7,6 @@ import Router from 'next/router';
 import { getAppCookies, verifyToken } from '../middleware/utils';
 
 /* components */
-import FormLogin from '../components/form/FormLogin';
 import Layout from '../components/layout/Layout';
 
 const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,2|3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -38,7 +37,7 @@ const FORM_DATA_LOGIN = {
   },
 };
 
-export default function Home(props) {
+export default function About(props) {
   const { baseApiUrl, referer, profile } = props;
   // const [cookie] = useCookie("username", "BrandonBaars");
   const [stateFormData, setStateFormData] = useState(FORM_DATA_LOGIN);
@@ -213,42 +212,36 @@ export default function Home(props) {
           <h1 className="title">
             Welcome to <a href="https://nextjs.org">Next.js!</a>
           </h1>
+
           {/* <div className="App">
           <h1>Hello CodeSandbox</h1>
           <h1>{cookie}</h1>
           <button onClick={() => {}}>Store Cookie</button>
         </div> */}
+
           <h2>JWT Authentication</h2>
+          {/* <h3>Login to continue</h3> */}
+          {/* <p className="description">
+            Use : <code>example1@example.com</code> or{' '}
+            <code>example2@example.com</code> with the password:
+            <code>password</code>
+          </p> */}
+          <h4>About Page</h4>
           {!profile ? (
-            <>
-              <h3>Login to continue</h3>
-              <p className="description">
-                Use : <code>example1@example.com</code> or{' '}
-                <code>example2@example.com</code> with the password:
-                <code>password</code>
-              </p>
-              <div style={{ maxWidth: '66.6%' }}>
-                <FormLogin
-                  props={{
-                    onSubmitHandler,
-                    onChangeHandler,
-                    loading,
-                    stateFormData,
-                    stateFormError,
-                    stateFormMessage,
-                  }}
-                />
-              </div>
-            </>
+            <a href="/">Login</a>
           ) : (
-            <>
-              <Link href={{ pathname: '/about' }}>
-                <a>About Page</a>
-              </Link>
+            <div style={{ maxWidth: '66.6%' }}>
               <a href="#" onClick={e => handleOnClickLogout(e)}>
                 Logout
               </a>
-            </>
+              <div style={{ textAlign: 'left' }}>
+                <h5>ID: {profile.id}</h5>
+                <h5>Email: {profile.email}</h5>
+              </div>
+              <Link href={{ pathname: '/' }}>
+                <a>Home Page</a>
+              </Link>
+            </div>
           )}
         </main>
 
@@ -393,10 +386,11 @@ export async function getServerSideProps(context) {
   const referer = req.headers.referer || '';
   const host = process.env.NODE_ENV === 'production' ? 'https://' : 'http://';
 
-  const baseApiUrl = `${host}${req.headers.host}/api`;
+  const baseApiUrl = `${host}${req.headers.host}/api/about`;
 
   const { token } = getAppCookies(req);
   const profile = token ? verifyToken(token.split(' ')[1]) : '';
+
   return {
     props: {
       baseApiUrl,

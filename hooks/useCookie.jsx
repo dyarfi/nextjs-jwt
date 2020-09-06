@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 /**
  * Custom hook to retrieve and store cookies for our application.
@@ -6,13 +6,13 @@ import React, { useState } from "react";
  * @param {String} defaultValue The default value to return in case the cookie doesn't exist
  */
 const useCookie = (key, defaultValue) => {
-  const getItem = (key) =>
-    document.cookie.split("; ").reduce((total, currentCookie) => {
-      const item = currentCookie.split("=");
+  const getItem = key =>
+    document.cookie.split('; ').reduce((total, currentCookie) => {
+      const item = currentCookie.split('=');
       const storedKey = item[0];
       const storedValue = item[1];
       return key === storedKey ? decodeURIComponent(storedValue) : total;
-    }, "");
+    }, '');
 
   const setItem = (key, value, numberOfDays) => {
     const now = new Date();
@@ -28,6 +28,5 @@ const useCookie = (key, defaultValue) => {
     setItem(key, value, numberOfDays);
   };
   return [cookie, updateCookie];
-
 };
 export default useCookie;

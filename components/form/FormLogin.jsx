@@ -6,11 +6,6 @@ function FormLogin({ props }) {
     stateFormError,
     stateFormMessage,
   } = props;
-  // console.log(onSubmitHandler);
-  // console.log(onChangeHandler);
-  // console.log(onSubmitHandler);
-  // console.log(stateFormData);
-  // console.log(stateFormError);
   return (
     <form className="form-login card" method="POST" onSubmit={onSubmitHandler}>
       <div className="form-group">
@@ -29,7 +24,6 @@ function FormLogin({ props }) {
           name="email"
           placeholder="Email"
           onChange={onChangeHandler}
-          // value=""
           value={stateFormData.email.value}
         />
         {stateFormError.email && (
@@ -45,7 +39,6 @@ function FormLogin({ props }) {
           name="password"
           placeholder="Password"
           onChange={onChangeHandler}
-          // value=""
           value={stateFormData.email.password}
         />
         {stateFormError.password && (
