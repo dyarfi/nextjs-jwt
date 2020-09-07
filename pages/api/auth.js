@@ -1,8 +1,9 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+/* JWT secret key */
 const KEY = process.env.JWT_KEY;
-const CODE = 200;
+/* Users collection sample */
 const USERS = [
   {
     id: 1,
@@ -32,13 +33,12 @@ const USERS = [
 
 export default (req, res) => {
   const { method } = req;
-  let message = {};
   try {
     switch (method) {
       case 'POST':
         /* Get Post Data */
         const { email, password } = req.body;
-        // /* Any how email or password is blank */
+        /* Any how email or password is blank */
         if (!email || !password) {
           return res.status(400).json({
             status: 'error',
@@ -51,12 +51,14 @@ export default (req, res) => {
         });
         /* Check if exists */
         if (!user) {
+          /* Send error with message */
           res.status(400).json({ status: 'error', error: 'User Not Found' });
         }
         /* Define variables */
         const userId = user.id,
           userEmail = user.email,
-          userPassword = user.password;
+          userPassword = user.password,
+          userCreated = user.createdAt;
         /* Check and compare password */
         bcrypt.compare(password, userPassword).then(isMatch => {
           /* User matched */
@@ -65,6 +67,7 @@ export default (req, res) => {
             const payload = {
               id: userId,
               email: userEmail,
+              createdAt: userCreated,
             };
             /* Sign token */
             jwt.sign(
@@ -74,6 +77,7 @@ export default (req, res) => {
                 expiresIn: 31556926, // 1 year in seconds
               },
               (err, token) => {
+                /* Send succes with token */
                 res.status(200).json({
                   success: true,
                   token: 'Bearer ' + token,
@@ -81,81 +85,20 @@ export default (req, res) => {
               },
             );
           } else {
+            /* Send error with message */
             res
               .status(400)
               .json({ status: 'error', error: 'Password incorrect' });
           }
         });
-        // message = { user };
         break;
       case 'PUT':
-        message = { put: true };
         break;
       case 'PATCH':
-        message = { patch: true };
         break;
       default:
-        message = { get: true };
     }
-    // res.statusCode = CODE;
-    // res.json({ message });
   } catch (error) {
     throw error;
   }
 };
-// const handler = nextConnect()
-//   .get((req, res) => { })
-//   .post(async (req, res) => {
-//     /* Get Post Data */
-//     const { email, password } = req.body;
-//     /* Any how email or password is blank */
-//     if (!email || !password) {
-//       return res.status(400).json({
-//         status: "error",
-//         error: "Request missing username or password",
-//       });
-//     }
-//     /* Check user in database */
-//     const user = await models.users.findOne({
-//       where: { email: email },
-//       attributes: ["id", "email", "password"],
-//       limit: 1,
-//     });
-//     /* Check if exists */
-//     if (!user) {
-//       res.status(400).json({ status: "error", error: "User Not Found" });
-//     }
-//     /* Define variables */
-//     const dataUser = user.toJSON();
-//     const userId = dataUser.id,
-//       userEmail = dataUser.email,
-//       userPassword = dataUser.password;
-//     /* Check and compare password */
-//     bcrypt.compare(password, userPassword).then((isMatch) => {
-//       if (isMatch) {
-//         /* User matched */
-//         /* Create JWT Payload */
-//         const payload = {
-//           id: userId,
-//           email: userEmail,
-//         };
-//         /* Sign token */
-//         jwt.sign(
-//           payload,
-//           KEY,
-//           {
-//             expiresIn: 31556926, // 1 year in seconds
-//           },
-//           (err, token) => {
-//             res.status(200).json({
-//               success: true,
-//               token: "Bearer " + token,
-//             });
-//           }
-//         );
-//       } else {
-//         res.status(400).json({ status: "error", error: "Password incorrect" });
-//       }
-//     });
-//   });
-// export default handler;

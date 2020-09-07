@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import Head from 'next/head';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import Router from 'next/router';
-// import useCookie from "../hooks/useCookie";
-import { getAppCookies, verifyToken } from '../middleware/utils';
+import { absoluteUrl, getAppCookies, verifyToken } from '../middleware/utils';
 
 /* components */
 import FormLogin from '../components/form/FormLogin';
@@ -39,8 +37,7 @@ const FORM_DATA_LOGIN = {
 };
 
 export default function Home(props) {
-  const { baseApiUrl, referer, profile } = props;
-  // const [cookie] = useCookie("username", "BrandonBaars");
+  const { baseApiUrl, profile } = props;
   const [stateFormData, setStateFormData] = useState(FORM_DATA_LOGIN);
   const [stateFormError, setStateFormError] = useState([]);
   const [stateFormValid, setStateFormValid] = useState(false);
@@ -227,7 +224,7 @@ export default function Home(props) {
                 <code>example2@example.com</code> with the password:
                 <code>password</code>
               </p>
-              <div style={{ maxWidth: '66.6%' }}>
+              <div>
                 <FormLogin
                   props={{
                     onSubmitHandler,
@@ -241,14 +238,14 @@ export default function Home(props) {
               </div>
             </>
           ) : (
-            <>
+            <div>
               <Link href={{ pathname: '/about' }}>
-                <a>About Page</a>
+                <a style={{ marginRight: '.75rem' }}>&bull; About Page</a>
               </Link>
               <a href="#" onClick={e => handleOnClickLogout(e)}>
-                Logout
+                &bull; Logout
               </a>
-            </>
+            </div>
           )}
         </main>
 
@@ -260,6 +257,16 @@ export default function Home(props) {
             flex-direction: column;
             justify-content: center;
             align-items: center;
+          }
+
+          .container a {
+            color: #0070f3;
+            font-weight: 600;
+          }
+
+          .container a:hover {
+            color: #335c8c;
+            font-weight: 600;
           }
 
           main {
@@ -389,18 +396,16 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { query, req, res, headers } = context;
-  const referer = req.headers.referer || '';
-  const host = process.env.NODE_ENV === 'production' ? 'https://' : 'http://';
+  const { req } = context;
+  const { origin } = absoluteUrl(req);
 
-  const baseApiUrl = `${host}${req.headers.host}/api`;
+  const baseApiUrl = `${origin}/api`;
 
   const { token } = getAppCookies(req);
   const profile = token ? verifyToken(token.split(' ')[1]) : '';
   return {
     props: {
       baseApiUrl,
-      referer,
       profile,
     },
   };

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Cookies from 'js-cookie';
 import Router from 'next/router';
 // import useCookie from "../hooks/useCookie";
-import { getAppCookies, verifyToken } from '../middleware/utils';
+import { absoluteUrl, getAppCookies, verifyToken } from '../middleware/utils';
 
 /* components */
 import Layout from '../components/layout/Layout';
@@ -209,38 +209,29 @@ export default function About(props) {
     <Layout title="Next.js with JWT Authentication | Home Page">
       <div className="container">
         <main>
-          <h1 className="title">
-            Welcome to <a href="https://nextjs.org">Next.js!</a>
-          </h1>
-
-          {/* <div className="App">
-          <h1>Hello CodeSandbox</h1>
-          <h1>{cookie}</h1>
-          <button onClick={() => {}}>Store Cookie</button>
-        </div> */}
-
-          <h2>JWT Authentication</h2>
-          {/* <h3>Login to continue</h3> */}
-          {/* <p className="description">
-            Use : <code>example1@example.com</code> or{' '}
-            <code>example2@example.com</code> with the password:
-            <code>password</code>
-          </p> */}
-          <h4>About Page</h4>
+          <h1 className="title">About Page</h1>
           {!profile ? (
-            <a href="/">Login</a>
+            <a href="/">Login to continue</a>
           ) : (
-            <div style={{ maxWidth: '66.6%' }}>
-              <a href="#" onClick={e => handleOnClickLogout(e)}>
-                Logout
-              </a>
-              <div style={{ textAlign: 'left' }}>
-                <h5>ID: {profile.id}</h5>
-                <h5>Email: {profile.email}</h5>
+            <div>
+              <div style={{ margin: '.5rem 0rem' }}>
+                <Link href={{ pathname: '/' }}>
+                  <a style={{ marginRight: '.75rem' }}>&bull; Home Page</a>
+                </Link>
+                <a href="#" onClick={e => handleOnClickLogout(e)}>
+                  &bull; Logout
+                </a>
               </div>
-              <Link href={{ pathname: '/' }}>
-                <a>Home Page</a>
-              </Link>
+              <div style={{ textAlign: 'left' }}>
+                <fieldset>
+                  <legend>
+                    <h3>Your Profile</h3>
+                  </legend>
+                  <h4>ID: {profile.id}</h4>
+                  <h4>Email: {profile.email}</h4>
+                  <h4>Created: {profile.createdAt}</h4>
+                </fieldset>
+              </div>
             </div>
           )}
         </main>
@@ -253,6 +244,16 @@ export default function About(props) {
             flex-direction: column;
             justify-content: center;
             align-items: center;
+          }
+
+          .container a {
+            color: #0070f3;
+            font-weight: 600;
+          }
+
+          .container a:hover {
+            color: #335c8c;
+            font-weight: 600;
           }
 
           main {
@@ -382,11 +383,10 @@ export default function About(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { query, req, res, headers } = context;
-  const referer = req.headers.referer || '';
-  const host = process.env.NODE_ENV === 'production' ? 'https://' : 'http://';
+  const { req } = context;
+  const { origin } = absoluteUrl(req);
 
-  const baseApiUrl = `${host}${req.headers.host}/api/about`;
+  const baseApiUrl = `${origin}/api/about`;
 
   const { token } = getAppCookies(req);
   const profile = token ? verifyToken(token.split(' ')[1]) : '';
@@ -394,7 +394,6 @@ export async function getServerSideProps(context) {
   return {
     props: {
       baseApiUrl,
-      referer,
       profile,
     },
   };
