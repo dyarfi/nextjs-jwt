@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Cookies from 'js-cookie';
 import Router from 'next/router';
-import { absoluteUrl, getAppCookies, verifyToken } from '../middleware/utils';
+import Cookies from 'js-cookie';
+
+/* middleware */
+import {
+  absoluteUrl,
+  getAppCookies,
+  verifyToken,
+  setLogout,
+} from '../middleware/utils';
 
 /* components */
 import FormLogin from '../components/form/FormLogin';
@@ -198,9 +205,7 @@ export default function Home(props) {
   }
 
   function handleOnClickLogout(e) {
-    e.preventDefault();
-    Cookies.remove('token');
-    Router.push('/');
+    setLogout(e);
   }
 
   return (
@@ -210,11 +215,6 @@ export default function Home(props) {
           <h1 className="title">
             Welcome to <a href="https://nextjs.org">Next.js!</a>
           </h1>
-          {/* <div className="App">
-          <h1>Hello CodeSandbox</h1>
-          <h1>{cookie}</h1>
-          <button onClick={() => {}}>Store Cookie</button>
-        </div> */}
           <h2>JWT Authentication</h2>
           {!profile ? (
             <>
@@ -248,148 +248,6 @@ export default function Home(props) {
             </div>
           )}
         </main>
-
-        <style jsx>{`
-          .container {
-            min-height: 100vh;
-            padding: 0 0.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-          }
-
-          .container a {
-            color: #0070f3;
-            font-weight: 600;
-          }
-
-          .container a:hover {
-            color: #335c8c;
-            font-weight: 600;
-          }
-
-          main {
-            padding: 5rem 0;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-          }
-
-          footer {
-            width: 100%;
-            min-height: 100px;
-            border-top: 1px solid #eaeaea;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-
-          footer img {
-            margin-left: 0.5rem;
-            margin-right: 0.5rem;
-          }
-
-          footer a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-
-          a {
-            color: inherit;
-            text-decoration: none;
-          }
-
-          .title a {
-            color: #0070f3;
-            text-decoration: none;
-          }
-
-          .title a:hover,
-          .title a:focus,
-          .title a:active {
-            text-decoration: underline;
-          }
-
-          .title {
-            margin: 0;
-            line-height: 1.15;
-            font-size: 4rem;
-          }
-
-          .title,
-          .description {
-            text-align: center;
-          }
-
-          .description {
-            line-height: 1.5;
-            font-size: 1.5rem;
-          }
-
-          code {
-            background: #fafafa;
-            border-radius: 5px;
-            padding: 0.75rem;
-            font-size: 1.1rem;
-            font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-              DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-          }
-
-          .grid {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-
-            max-width: 800px;
-            margin-top: 3rem;
-          }
-
-          .card {
-            margin: 1rem;
-            flex-basis: 45%;
-            padding: 1.5rem;
-            text-align: left;
-            color: inherit;
-            text-decoration: none;
-            border: 1px solid #eaeaea;
-            border-radius: 10px;
-            transition: color 0.15s ease, border-color 0.15s ease;
-          }
-
-          .card:hover,
-          .card:focus,
-          .card:active {
-            color: #0070f3;
-            border-color: #0070f3;
-          }
-
-          .card h3 {
-            margin: 0 0 1rem 0;
-            font-size: 1.5rem;
-          }
-
-          .card p {
-            margin: 0;
-            font-size: 1.25rem;
-            line-height: 1.5;
-          }
-
-          .logo {
-            height: 1em;
-          }
-
-          @media (max-width: 600px) {
-            .grid {
-              width: 100%;
-              flex-direction: column;
-            }
-          }
-        `}</style>
       </div>
     </Layout>
   );

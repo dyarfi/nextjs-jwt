@@ -1,6 +1,7 @@
+/* next.js head */
 import Head from 'next/head';
 
-/* Components */
+/* components */
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 
@@ -30,7 +31,6 @@ export default function Layout({
         <meta property="twitter:url" content={url} />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
-
         <meta
           property="og:image"
           content={`${origin}${image}?v=${Math.floor(Date.now() / 100)}`}
@@ -49,12 +49,6 @@ export default function Layout({
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
-        {/* <link
-          rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-          crossorigin="anonymous"
-        /> */}
       </Head>
       <Header />
       {children}
@@ -166,7 +160,6 @@ export default function Layout({
           border-right: 50px solid #cdcdcd;
           border-bottom: 25px solid transparent;
         }
-
         #__next {
           position: relative;
           overflow-x: hidden;
@@ -202,7 +195,6 @@ export default function Layout({
           background-repeat: repeat;
           background-attachment: scroll;
         }
-
         .navbar {
           position: relative;
           display: flex;
@@ -211,7 +203,6 @@ export default function Layout({
           justify-content: space-between;
           padding: 0.5rem 1rem;
         }
-
         .container {
           min-height: 100vh;
           padding: 0 0.5rem;
@@ -220,13 +211,11 @@ export default function Layout({
           justify-content: center;
           align-items: center;
         }
-
         .headline {
           text-transform: capitalize;
           position: relative;
           color: #333333;
         }
-
         .headline::before {
           position: absolute;
           bottom: -5px;
@@ -236,7 +225,6 @@ export default function Layout({
           width: 20%;
           background-color: #cdcdcd;
         }
-
         main.content-detail {
           margin-top: 3rem;
           text-align: left;
@@ -259,7 +247,6 @@ export default function Layout({
           justify-content: center;
           align-items: center;
         }
-
         main::before {
           content: '';
           position: absolute;
@@ -284,7 +271,6 @@ export default function Layout({
           opacity: 0.25;
           border: 4px solid #cdcdcd;
         }
-
         footer {
           width: 100%;
           min-height: 80px;
@@ -294,7 +280,6 @@ export default function Layout({
           justify-content: center;
           align-items: center;
         }
-
         footer::before {
           bottom: 8rem;
           right: 2rem;
@@ -309,12 +294,9 @@ export default function Layout({
           border-right: 100px solid #cdcdcd;
           border-bottom: 55px solid transparent;
         }
-
         footer::after {
           content: '';
           position: absolute;
-          // left: 0;
-          // right: 0;
           bottom: 180px;
           z-index: -1;
           width: 350px;
@@ -326,27 +308,22 @@ export default function Layout({
           background-repeat: repeat;
           background-attachment: scroll;
         }
-
         footer img {
           vertical-align: middle;
           margin-left: 0.5rem;
           margin-right: 0.5rem;
         }
-
         footer a {
           display: inline-block;
           clear: both;
         }
-
         footer span {
           clear: both;
           display: block;
         }
-
         .account {
           margin-bottom: 1.5rem;
         }
-
         .account a {
           color: #0070f3;
           text-decoration: underline;
@@ -368,48 +345,39 @@ export default function Layout({
           margin-top: 1.5rem;
           margin-bottom: 1.5rem;
         }
-
         a {
           color: inherit;
           text-decoration: none;
         }
-
         span {
           font-size: 0.82rem;
         }
-
         .title a,
         .sub-title a {
           color: #0070f3;
           text-decoration: none;
         }
-
         .title a:hover,
         .title a:focus,
         .title a:active,
         .sub-title a:hover,
         .sub-title a:focus,
         .sub-title a:active {
-          // text-decoration: underline;
           text-decoration: none;
         }
-
         .title {
           margin: 0;
           line-height: 1.15;
           font-size: 3.5rem;
         }
-
         .title,
         .description {
           text-align: center;
         }
-
         .description {
           line-height: 1.5;
           font-size: 1.5rem;
         }
-
         code {
           background: #fafafa;
           border-radius: 5px;
@@ -418,7 +386,6 @@ export default function Layout({
           font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
             DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
         }
-
         .grid {
           display: flex;
           align-items: center;
@@ -429,7 +396,6 @@ export default function Layout({
           margin-bottom: 1.5rem;
           overflow: hidden;
         }
-
         .card {
           position: relative;
           overflow: hidden;
@@ -447,7 +413,6 @@ export default function Layout({
           box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.1);
           z-index: 1;
         }
-
         .card::after {
           content: '';
           position: absolute;
@@ -465,7 +430,6 @@ export default function Layout({
           background-attachment: scroll;
           z-index: -1;
         }
-
         .card::before {
           content: '';
           position: absolute;
@@ -480,7 +444,6 @@ export default function Layout({
           border-radius: 50%;
           z-index: -1;
         }
-
         .card:hover,
         .card:focus,
         .card:active {
@@ -488,34 +451,27 @@ export default function Layout({
           border-color: #0070f3;
           box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.15);
         }
-
         .card h3 {
           margin: 0 0 1rem 0;
           font-size: 1.5rem;
         }
-
         .card p {
           margin: 0;
           font-size: 1.25rem;
           line-height: 1.5;
         }
-
         .card span small {
           display: block;
         }
-
         .logo {
           height: 1em;
         }
-
         .warning {
           color: #990000;
         }
-
         .text-center {
           text-align: center;
         }
-
         // Extra small devices (portrait phones, less than 576px)
         @media (max-width: 575.98px) {
           .grid {

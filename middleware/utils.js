@@ -1,3 +1,6 @@
+import Router from 'next/router';
+import Cookies from 'js-cookie';
+
 import jwt from 'jsonwebtoken';
 
 const SECRET_KEY = process.env.JWT_KEY;
@@ -50,4 +53,14 @@ export function absoluteUrl(req, setLocalhost) {
     origin: protocol + '//' + host,
     url: req,
   };
+}
+
+/*
+ * @params {none} set action for logout and remove cookie
+ * @return {function} router function to redirect
+ */
+export function setLogout(e) {
+  e.preventDefault();
+  Cookies.remove('token');
+  Router.push('/');
 }
