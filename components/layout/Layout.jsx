@@ -492,6 +492,21 @@ export default function Layout({
         @media (min-width: 1200px) {
         }
       `}</style>
+      {process.env.NODE_ENV !== 'development' && (
+        <>
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=UA-123722350-4"
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer = window.dataLayer || []; function gtag()
+          {dataLayer.push(arguments)}
+          gtag('js', new Date()); gtag('config', 'UA-123722350-4');`,
+            }}
+          />
+        </>
+      )}
     </div>
   );
 }
