@@ -56,14 +56,7 @@ export default (req, res) => {
             res.status(400).json({ status: 'error', error: 'User Not Found' });
           }
           /* Variables checking */
-          if (
-            user &&
-            user.id &&
-            user.email &&
-            user.password &&
-            user.createdAt
-          ) {
-            /* Define variables */
+          if (user) {
             const userId = user.id,
               userEmail = user.email,
               userPassword = user.password,
