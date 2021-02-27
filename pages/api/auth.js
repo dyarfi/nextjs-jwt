@@ -55,43 +55,52 @@ export default (req, res) => {
             /* Send error with message */
             res.status(400).json({ status: 'error', error: 'User Not Found' });
           }
-          /* Define variables */
-          const userId = user.id,
-            userEmail = user.email,
-            userPassword = user.password,
-            userCreated = user.createdAt;
-          /* Check and compare password */
-          bcrypt.compare(password, userPassword).then(isMatch => {
-            /* User matched */
-            if (isMatch) {
-              /* Create JWT Payload */
-              const payload = {
-                id: userId,
-                email: userEmail,
-                createdAt: userCreated,
-              };
-              /* Sign token */
-              jwt.sign(
-                payload,
-                KEY,
-                {
-                  expiresIn: 31556926, // 1 year in seconds
-                },
-                (err, token) => {
-                  /* Send succes with token */
-                  res.status(200).json({
-                    success: true,
-                    token: 'Bearer ' + token,
-                  });
-                },
-              );
-            } else {
-              /* Send error with message */
-              res
-                .status(400)
-                .json({ status: 'error', error: 'Password incorrect' });
-            }
-          });
+          /* Variables checking */
+          if (
+            user &&
+            user.id &&
+            user.email &&
+            user.password &&
+            user.createdAt
+          ) {
+            /* Define variables */
+            const userId = user.id,
+              userEmail = user.email,
+              userPassword = user.password,
+              userCreated = user.createdAt;
+            /* Check and compare password */
+            bcrypt.compare(password, userPassword).then(isMatch => {
+              /* User matched */
+              if (isMatch) {
+                /* Create JWT Payload */
+                const payload = {
+                  id: userId,
+                  email: userEmail,
+                  createdAt: userCreated,
+                };
+                /* Sign token */
+                jwt.sign(
+                  payload,
+                  KEY,
+                  {
+                    expiresIn: 31556926, // 1 year in seconds
+                  },
+                  (err, token) => {
+                    /* Send succes with token */
+                    res.status(200).json({
+                      success: true,
+                      token: 'Bearer ' + token,
+                    });
+                  },
+                );
+              } else {
+                /* Send error with message */
+                res
+                  .status(400)
+                  .json({ status: 'error', error: 'Password incorrect' });
+              }
+            });
+          }
           break;
         case 'PUT':
           break;
